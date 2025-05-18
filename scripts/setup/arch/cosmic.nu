@@ -1,9 +1,8 @@
 use std/log
 
 export def install [] {
-  log info "Installing Cosmic"
   if  (pacman -Q cosmic-session | complete | get exit_code) == 0 {
-    log info "Cosmic is already installed"
+    log info "already installed: Cosmic"
   } else {
     sudo pacman -S --noconfirm cosmic
   }
