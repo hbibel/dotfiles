@@ -7,8 +7,10 @@ use arch/yay.nu
 use arch/zsh.nu
 use arch/wget.nu
 use arch/dropbox.nu
+use arch/swap.nu
 
 bluetooth setup
+swap setup_btrfs_swap
 
 cosmic install
 yay install
