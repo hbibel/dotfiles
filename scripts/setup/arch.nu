@@ -7,6 +7,7 @@ use arch/yay.nu
 use arch/zsh.nu
 use arch/wget.nu
 use arch/dropbox.nu
+use arch/keepass.nu
 use arch/swap.nu
 
 bluetooth setup
@@ -20,3 +21,4 @@ wget install
 # zsh install # TODO configure OMZ
 
 dropbox install
+keepass install
