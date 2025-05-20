@@ -8,6 +8,7 @@ use arch/zsh.nu
 use arch/wget.nu
 use arch/dropbox.nu
 use arch/keepass.nu
+use arch/joplin.nu
 use arch/swap.nu
 
 bluetooth setup
@@ -22,3 +23,4 @@ wget install
 
 dropbox install
 keepass install
+joplin install
