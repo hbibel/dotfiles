@@ -16,6 +16,7 @@ local setup = function()
       "markdown",
       "terraform",
       "roc",
+      "nu",
     },
 
     auto_install = false,
