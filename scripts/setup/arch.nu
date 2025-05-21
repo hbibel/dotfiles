@@ -12,6 +12,7 @@ use arch/joplin.nu
 use arch/edge.nu
 use arch/swap.nu
 use arch/neovim.nu
+use arch/wezterm.nu
 
 bluetooth setup
 swap setup_btrfs_swap
@@ -23,6 +24,7 @@ wget install
 
 # zsh install # TODO configure OMZ
 
+wezterm install
 neovim install
 dropbox install
 keepass install
