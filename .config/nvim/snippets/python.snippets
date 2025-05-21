@@ -1,0 +1,18 @@
+snippet __init__
+	def __init__(self) -> None:
+		...
+
+snippet main
+	def main() -> None:
+		${0}
+	
+	if __name__ == "__main__":
+		main()
+
+snippet amain
+	async def main() -> None:
+		${0}
+	
+	if __name__ == "__main__":
+		import asyncio
+		asyncio.run(main())

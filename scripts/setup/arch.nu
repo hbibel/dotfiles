@@ -11,6 +11,7 @@ use arch/keepass.nu
 use arch/joplin.nu
 use arch/edge.nu
 use arch/swap.nu
+use arch/neovim.nu
 
 bluetooth setup
 swap setup_btrfs_swap
@@ -22,6 +23,7 @@ wget install
 
 # zsh install # TODO configure OMZ
 
+neovim install
 dropbox install
 keepass install
 joplin install

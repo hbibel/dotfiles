@@ -1,0 +1,10 @@
+snippet testblock
+		#[cfg(test)]
+		mod tests {
+			use super::*;
+
+			#[test]
+			fn ${0:foo}() {
+				unimplemented!();
+			}
+		}
