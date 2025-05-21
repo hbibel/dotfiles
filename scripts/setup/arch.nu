@@ -13,6 +13,7 @@ use arch/edge.nu
 use arch/swap.nu
 use arch/neovim.nu
 use arch/wezterm.nu
+use arch/goose.nu
 
 bluetooth setup
 swap setup_btrfs_swap
@@ -30,3 +31,4 @@ dropbox install
 keepass install
 joplin install
 edge install
+goose install

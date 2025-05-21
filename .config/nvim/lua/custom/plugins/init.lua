@@ -179,41 +179,58 @@ return require('lazy').setup({
     end
   },
 
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   version = "*",
+  --   opts = {
+  --     windows = {
+  --       width = 50,
+  --       edit = {
+  --         start_insert = false,
+  --       },
+  --       ask = {
+  --         start_insert = false,
+  --       }
+  --     },
+  --     behaviour = {
+  --       auto_suggestions = false,
+  --     },
+  --     system_prompt = "Don't ever write code comments, unless I explicitly tell you so.",
+  --   },
+  --   build = "make",
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below dependencies are optional,
+  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+  --     {
+  --       -- Make sure to set this up properly if you have lazy=true
+  --       'MeanderingProgrammer/render-markdown.nvim',
+  --       opts = {
+  --         file_types = { "markdown", "Avante" },
+  --       },
+  --       ft = { "markdown", "Avante" },
+  --     },
+  --   },
+  -- },
+
+
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = "*",
-    opts = {
-      windows = {
-        width = 50,
-        edit = {
-          start_insert = false,
-        },
-        ask = {
-          start_insert = false,
-        }
-      },
-      behaviour = {
-        auto_suggestions = false,
-      },
-      system_prompt = "Don't ever write code comments, unless I explicitly tell you so.",
-    },
-    build = "make",
+    "azorng/goose.nvim",
+    config = function()
+      require("goose").setup({})
+    end,
     dependencies = {
-      "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
+        "MeanderingProgrammer/render-markdown.nvim",
         opts = {
-          file_types = { "markdown", "Avante" },
+          anti_conceal = { enabled = false },
         },
-        ft = { "markdown", "Avante" },
-      },
+      }
     },
   },
 }, {})
