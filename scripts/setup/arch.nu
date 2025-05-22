@@ -16,6 +16,7 @@ use arch/wezterm.nu
 use arch/goose.nu
 use arch/sof.nu
 use arch/ripgrep.nu
+use arch/nix.nu
 
 bluetooth setup
 swap setup_btrfs_swap
@@ -36,3 +37,4 @@ keepass install
 joplin install
 edge install
 goose install
+nix install

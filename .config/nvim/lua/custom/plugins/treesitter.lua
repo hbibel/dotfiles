@@ -17,6 +17,7 @@ local setup = function()
       "terraform",
       "roc",
       "nu",
+      "nix",
     },
 
     auto_install = false,
