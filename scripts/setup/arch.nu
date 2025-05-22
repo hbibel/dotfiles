@@ -14,9 +14,11 @@ use arch/swap.nu
 use arch/neovim.nu
 use arch/wezterm.nu
 use arch/goose.nu
+use arch/sof.nu
 
 bluetooth setup
 swap setup_btrfs_swap
+sof install
 
 cosmic install
 yay install
