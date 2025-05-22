@@ -15,6 +15,7 @@ use arch/neovim.nu
 use arch/wezterm.nu
 use arch/goose.nu
 use arch/sof.nu
+use arch/ripgrep.nu
 
 bluetooth setup
 swap setup_btrfs_swap
@@ -24,6 +25,7 @@ cosmic install
 yay install
 
 wget install
+ripgrep install
 
 # zsh install # TODO configure OMZ
 
