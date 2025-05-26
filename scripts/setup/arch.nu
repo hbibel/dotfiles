@@ -1,6 +1,7 @@
 use std/log
 
 use arch/bluetooth.nu
+use arch/audio.nu
 
 use arch/cosmic.nu
 use arch/yay.nu
@@ -19,6 +20,7 @@ use arch/ripgrep.nu
 use arch/nix.nu
 
 bluetooth setup
+audio setup
 swap setup_btrfs_swap
 sof install
 
