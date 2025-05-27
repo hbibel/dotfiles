@@ -18,6 +18,7 @@ use arch/goose.nu
 use arch/sof.nu
 use arch/ripgrep.nu
 use arch/nix.nu
+use arch/discord.nu
 
 bluetooth setup
 audio setup
@@ -40,3 +41,4 @@ joplin install
 edge install
 goose install
 nix install
+discord install
