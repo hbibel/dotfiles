@@ -19,11 +19,13 @@ use arch/sof.nu
 use arch/ripgrep.nu
 use arch/nix.nu
 use arch/discord.nu
+use arch/fonts.nu
 
 bluetooth setup
 audio setup
 swap setup_btrfs_swap
 sof install
+fonts install
 
 cosmic install
 yay install
