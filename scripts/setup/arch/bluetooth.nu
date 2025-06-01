@@ -1,3 +1,5 @@
+use std/log
+
 export def setup [] {
   let bluetooth_status = sudo systemctl status bluetooth | complete
   if ($bluetooth_status.exit_code) == 0 {
