@@ -1,6 +1,8 @@
+use std/log
+
 export def setup_btrfs_swap [] {
   if (swapon --show | lines | length) > 1 {
-    print "Swap is already configured"
+    log info "Swap is already configured"
     return
   }
 

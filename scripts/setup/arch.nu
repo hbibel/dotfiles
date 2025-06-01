@@ -21,6 +21,7 @@ use arch/nix.nu
 use arch/discord.nu
 use arch/fonts.nu
 use arch/ntp.nu
+use arch/samba.nu
 
 bluetooth setup
 audio setup
@@ -34,6 +35,7 @@ yay install
 
 wget install
 ripgrep install
+samba install
 
 # zsh install # TODO configure OMZ
 
