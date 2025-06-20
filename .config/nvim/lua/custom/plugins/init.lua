@@ -142,7 +142,7 @@ return require('lazy').setup({
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
-  { 'rmagatti/goto-preview',   opts = {} },
+  { 'rmagatti/goto-preview', opts = {} },
 
   {
     'stevearc/conform.nvim',
@@ -157,8 +157,6 @@ return require('lazy').setup({
   },
 
   scala.plugins,
-
-  { 'simrat39/rust-tools.nvim' },
 
   -- looks nicer than vim.opt.colorcolumn = "80"
   {
