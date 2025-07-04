@@ -1,0 +1,4 @@
+[toolchain]
+channel = "1.87" # should be replaced by script
+components = [ "rustfmt", "clippy", "rust-analyzer" ]
+targets = [ "x86_64-unknown-linux-gnu" ]
