@@ -4,6 +4,7 @@
 # use utils/goose *
 
 export use ~/scripts/workflows/proj.nu
+export use ~/scripts/utils/linux.nu
 
 alias la = ls -la
 
