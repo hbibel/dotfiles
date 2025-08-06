@@ -1,18 +1,25 @@
+use ~/scripts/utils/linux.nu
+
 export def setup [] {
-  let service_status = sudo systemctl status pipewire-pulse | complete
-  if ($service_status.exit_code) == 0 {
+  use linux SERVICE_STATUS_RUNNING
+  use linux SERVICE_STATUS_NOT_FOUND
+
+  let service_status = linux get_service_status pipewire-pulse
+  if $service_status == $SERVICE_STATUS_RUNNING {
     log info "pipewire-pulse already set up"
-    return
-  } else if ($service_status.exit_code) == 3 {
-    sudo pacman -S --noconfirm pipewire-audio pipewire-pulse
-    systemctl --user enable pipewire-pulse.service
-    systemctl --user start pipewire-pulse.service
-    return
-  } else if ($service_status.exit_code) != 4 {
-    let err_output = (sudo systemctl status service | complete)
-    log error $"querying service service status returned an error: ($err_output)"
     return
   }
 
-  # run `pactl info` to check
+  if $service_status == $SERVICE_STATUS_NOT_FOUND {
+    sudo pacman -S --noconfirm pipewire-audio pipewire-pulse
+    systemctl --user enable pipewire-pulse.service
+    systemctl --user start pipewire-pulse.service
+  } else if $bluetooth_status == $SERVICE_STATUS_INACTIVE {
+    systemctl --user enable pipewire-pulse.service
+    systemctl --user start pipewire-pulse.service
+  } else {
+    log error $"unhandled pipewire-pulse status: ($service_status)"
+  }
+
+  # run `pactl info` to check manually
 }
