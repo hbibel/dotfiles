@@ -4,15 +4,15 @@ export const SERVICE_STATUS_RUNNING = "running"
 export const SERVICE_STATUS_EXITED = "exited"
 export const SERVICE_STATUS_FAILED = "failed"
 
-export def get_service_status [service_name: string] {
-  mut status = get_service_status_tuple $service_name false
+export def service_status [service_name: string] {
+  mut status = service_status_tuple $service_name false
   mut load_state = $status | get load_state
   mut active_state = $status | get active_state
   mut sub_state = $status | get sub_state
 
   if $load_state == "not-found" {
     # service not found in kernel space, try again searching for user service
-    $status = (get_service_status_tuple $service_name true)
+    $status = (service_status_tuple $service_name true)
     $load_state = $status | get load_state
     $active_state = $status | get active_state
     $sub_state = $status | get sub_state
@@ -33,7 +33,7 @@ export def get_service_status [service_name: string] {
   $"other status: ($status)"
 }
 
-def get_service_status_tuple [service_name: string, user_space: bool] {
+def service_status_tuple [service_name: string, user_space: bool] {
   let status_output = if $user_space {
     systemctl --user show $service_name | complete | get stdout
   } else {
