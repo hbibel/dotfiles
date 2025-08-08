@@ -22,6 +22,7 @@ use arch/discord.nu
 use arch/fonts.nu
 use arch/ntp.nu
 use arch/samba.nu
+use arch/printer.nu
 
 bluetooth setup
 audio setup
@@ -29,6 +30,7 @@ swap setup_btrfs_swap
 sof install
 fonts install
 ntp setup
+printer setup
 
 cosmic install
 yay install
