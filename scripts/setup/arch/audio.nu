@@ -1,10 +1,14 @@
-use ~/scripts/utils/linux.nu
+use std/log
+
+use ~/scripts/utils/linux.nu [
+  service_status,
+  SERVICE_STATUS_RUNNING,
+  SERVICE_STATUS_NOT_FOUND,
+  SERVICE_STATUS_INACTIVE
+]
 
 export def setup [] {
-  use linux SERVICE_STATUS_RUNNING
-  use linux SERVICE_STATUS_NOT_FOUND
-
-  let service_status = linux get_service_status pipewire-pulse
+  let service_status = service_status pipewire-pulse
   if $service_status == $SERVICE_STATUS_RUNNING {
     log info "pipewire-pulse already set up"
     return

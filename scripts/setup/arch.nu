@@ -37,8 +37,6 @@ wget install
 ripgrep install
 samba install
 
-# zsh install # TODO configure OMZ
-
 wezterm install
 neovim install
 dropbox install

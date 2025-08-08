@@ -8,5 +8,3 @@ export def install [] {
 
   sudo pacman -S --noconfirm discord
 }
-
-

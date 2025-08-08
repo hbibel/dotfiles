@@ -1,11 +1,14 @@
 use std/log
-use ~/scripts/utils/linux.nu
+
+use ~/scripts/utils/linux.nu [
+  service_status,
+  SERVICE_STATUS_RUNNING,
+  SERVICE_STATUS_NOT_FOUND,
+  SERVICE_STATUS_INACTIVE
+]
 
 export def setup [] {
-  use linux SERVICE_STATUS_RUNNING
-  use linux SERVICE_STATUS_NOT_FOUND
-
-  let bluetooth_status = linux get_service_status bluetooth
+  let bluetooth_status = service_status bluetooth
   if $bluetooth_status == $SERVICE_STATUS_RUNNING {
     log info "bluetooth already set up"
     return
