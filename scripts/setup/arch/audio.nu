@@ -14,7 +14,7 @@ export def setup [] {
     sudo pacman -S --noconfirm pipewire-audio pipewire-pulse
     systemctl --user enable pipewire-pulse.service
     systemctl --user start pipewire-pulse.service
-  } else if $bluetooth_status == $SERVICE_STATUS_INACTIVE {
+  } else if $service_status == $SERVICE_STATUS_INACTIVE {
     systemctl --user enable pipewire-pulse.service
     systemctl --user start pipewire-pulse.service
   } else {
