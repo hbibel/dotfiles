@@ -59,7 +59,7 @@ if "aarch64-apple-darwin" == wezterm.target_triple then
   }
   config.default_prog = { "/opt/homebrew/bin/nu" }
 elseif "x86_64-unknown-linux-gnu" == wezterm.target_triple then
-  config.default_prog = { "/local/bin/nu" }
+  config.default_prog = { "/usr/bin/nu" }
 end
 
 -- Keybindings
