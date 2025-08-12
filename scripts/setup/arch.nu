@@ -23,6 +23,8 @@ use arch/fonts.nu
 use arch/ntp.nu
 use arch/samba.nu
 use arch/printer.nu
+use arch/delta.nu
+use arch/fzf.nu
 
 bluetooth setup
 audio setup
@@ -48,3 +50,5 @@ edge install
 goose install
 nix install
 discord install
+delta install
+fzf install
