@@ -6,6 +6,8 @@
 use std/util "path add"
 
 export use ~/scripts/workflows/proj.nu
+export use ~/scripts/workflows/version_control.nu wt
+
 export use ~/scripts/utils/linux.nu
 
 alias la = ls -la
