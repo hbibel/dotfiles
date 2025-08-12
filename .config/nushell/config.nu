@@ -13,6 +13,7 @@ export use ~/scripts/utils/linux.nu
 alias la = ls -la
 
 path add $"($env.HOME)/bin"
+path add $"($env.HOME)/.cargo/bin"
 
 if ($nu.os-info.name == "macos") {
   path add "/opt/homebrew/bin"
