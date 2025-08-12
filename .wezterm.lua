@@ -11,7 +11,12 @@ end
 config.color_scheme = "tokyonight_night"
 
 config.font = wezterm.font "FiraCode Nerd Font Mono"
-config.font_size = 10.0
+-- TODO this should rather depend on the display
+if "aarch64-apple-darwin" == wezterm.target_triple then
+  config.font_size = 14.0
+else
+  config.font_size = 10.0
+end
 
 config.window_background_image_hsb = {
   brightness = 0.05,
@@ -46,6 +51,15 @@ config.use_fancy_tab_bar = false
 if "x86_64-pc-windows-msvc" == wezterm.target_triple then
   -- Run wsl -l -v in a Windows terminal to get the domain
   config.default_domain = "WSL:Ubuntu"
+end
+
+if "aarch64-apple-darwin" == wezterm.target_triple then
+  config.set_environment_variables = {
+    XDG_CONFIG_HOME = wezterm.home_dir .. "/.config",
+  }
+  config.default_prog = { "/opt/homebrew/bin/nu" }
+elseif "x86_64-unknown-linux-gnu" == wezterm.target_triple then
+  config.default_prog = { "/local/bin/nu" }
 end
 
 -- Keybindings
