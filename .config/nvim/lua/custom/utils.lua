@@ -6,7 +6,12 @@ local M = {}
 ---@return string | nil
 M.search_upwards = function(predicate)
   local current_file = vim.api.nvim_buf_get_name(0)
-  local current_dir = vim.fn.fnamemodify(current_file, ":h")
+  local current_dir
+  if vim.fn.isdirectory(current_file) then
+    current_dir = current_file
+  else
+    current_dir = vim.fn.fnamemodify(current_file, ":h")
+  end
 
   while current_dir ~= "/" do
     if predicate(current_dir) then
