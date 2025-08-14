@@ -10,6 +10,8 @@ export use ~/scripts/workflows/version_control.nu wt
 
 export use ~/scripts/utils/linux.nu
 
+export use ~/scripts/setup/software/neovim.nu
+
 alias la = ls -la
 
 path add $"($env.HOME)/bin"
