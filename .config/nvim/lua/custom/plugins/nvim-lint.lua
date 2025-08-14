@@ -19,19 +19,16 @@ return {
     local function find_node_modules_binary(cmd)
       local utils = require("custom.utils")
 
-      local node_modules_dir = utils.search_upwards(function(dir)
-        if vim.uv.fs_stat(dir .. "/node_modules/.bin/" .. cmd) then
-          return true
-        end
-        return false
-      end)
-
-      if node_modules_dir then
-        local binary_path = node_modules_dir .. "/node_modules/.bin/" .. cmd
-        return vim.fn.fnamemodify(binary_path, ":p")
+      local node_modules_parent = vim.fs.root(0, { "node_modules" })
+      if node_modules_parent == nil then
+        return nil
       end
 
-      return nil
+      local binary_path = node_modules_parent .. "/node_modules/.bin/" .. cmd
+      if not vim.uv.fs_stat(binary_path) then
+        return nil
+      end
+      return vim.fn.fnamemodify(binary_path, ":p")
     end
 
     local xo_bin = find_node_modules_binary("xo")

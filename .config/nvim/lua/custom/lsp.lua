@@ -3,7 +3,6 @@ local M = {}
 M.on_attach = function(_, bufnr)
   local keymaps = require("custom.keymaps")
   local scala = require("custom.scala")
-  local python = require("custom.python")
   local dap = require("dap")
   local commands = require("custom.commands")
 
@@ -19,21 +18,12 @@ M.on_attach = function(_, bufnr)
       keymaps.scala(bufnr)
     end
   end
-
-  if file_type == "python" then
-    keymaps.python(bufnr)
-    python.attach_lsp()
-  end
 end
 
 M.servers = function()
-  local python = require("custom.python")
   return {
     gopls = {
       filetypes = { "go", "gomod", },
-    },
-    pylsp = {
-      settings = python.pylsp_config(),
     },
     lua_ls = {},
     ts_ls = {

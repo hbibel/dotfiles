@@ -2,6 +2,37 @@ local M = {
   tools_checked = false,
 }
 
+M.init = function()
+  if vim.bo.filetype ~= "python" then
+    return
+  end
+
+  local root_dir
+  if vim.fs.root(0, ".venv") ~= nil then
+    root_dir = vim.fs.root(0, ".venv")
+  else
+    root_dir = vim.fn.getcwd()
+  end
+
+  local venv_dir = M.get_venv_dir()
+
+--   table.insert(require("dap").configurations.python,
+--     {
+--       name = "Pytest current file",
+--       type = "python",
+--       request = "launch",
+--       module = "pytest",
+--       args = { "${file}" },
+--       justMyCode = "false",
+--       -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+--     }
+--   )
+
+  M._register_lsps(root_dir)
+
+  M._print_tools_status(venv_dir)
+end
+
 ---@return boolean
 M.venv_in_project = function()
   return M.get_venv_dir() ~= nil
@@ -9,14 +40,56 @@ end
 
 ---@return string | nil
 M.get_venv_dir = function()
-  local utils = require("custom.utils")
-
-  local venv_parent = utils.search_upwards(function(dir)
-    return vim.fn.isdirectory(dir .. "/.venv") == 1
-  end)
-  if venv_parent ~= nil then
-    return venv_parent .. "/.venv"
+  local parent = vim.fs.root(0, ".venv")
+  if parent == nil then
+    return nil
+  elseif not vim.fn.isdirectory(parent .. "/.venv") then
+    vim.notify("Warning: " .. parent .. "/.venv exists but is not a directory")
+    return nil
+  else
+    return parent .. "/.venv"
   end
+end
+
+M._register_lsps = function(root_dir)
+  local venv_dir = M.get_venv_dir()
+  local project_root = vim.fs.root(0, "pyproject.toml")
+
+  vim.lsp.config("pylsp", {
+    -- TODO install server without Mason
+    cmd = {
+      "/Users/vw95b97/.local/share/nvim/mason/bin/pylsp",
+    },
+    filetypes = { "python" },
+    -- pyproject toml files can be in subdirectories for projects with uv
+    -- workspaces, so .venv is the better root marker
+    root_markers = { ".venv" ,"pyproject.toml" },
+
+    init_options = {
+      -- https://github.com/python-lsp/python-lsp-server/blob/eb61ccd97bbe9c58fbde6496a78015ee3c129146/CONFIGURATION.md
+      pylsp = {
+        plugins = {
+          autopep8 = {
+            enabled = false,
+          },
+          pycodestyle = {
+            enabled = false,
+          },
+          jedi = {
+            environment = venv_dir,
+          },
+        },
+      },
+    }
+  })
+  vim.lsp.enable("pylsp")
+
+  vim.lsp.config("ruff", {
+    cmd = { M._ruff_path(venv_dir), "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml" },
+  })
+  vim.lsp.enable("ruff")
 end
 
 ---@return string[] | nil
@@ -46,61 +119,16 @@ M.get_mypy_command = function()
   return nil
 end
 
-M.pylsp_config = function()
-  local venv_dir = M.get_venv_dir()
-  if venv_dir ~= nil then
-    -- Jedi does not like it if we use a relative path for an environment
-    -- created with venv (no issues with Poetry virtual environments, wtf)
-    venv_dir = vim.fn.getcwd() .. "/" .. venv_dir
-  end
 
-  return {
-    -- see https://github.com/python-lsp/python-lsp-server/blob/eb61ccd97bbe9c58fbde6496a78015ee3c129146/CONFIGURATION.md
-    pylsp = {
-      plugins = {
-        -- Using Ruff for linting and formatting, see python.lua
-        autopep8 = {
-          enabled = false,
-        },
-        pycodestyle = {
-          enabled = false,
-        },
-        jedi = {
-          environment = venv_dir,
-        },
-      },
-    }
-  }
-end
-
-M.init = function(on_attach)
-  table.insert(require("dap").configurations.python,
-    {
-      name = "Pytest current file",
-      type = "python",
-      request = "launch",
-      module = "pytest",
-      args = { "${file}" },
-      justMyCode = "false",
-      -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
-    }
-  )
-
-  local ruff_cmd
-  if M.venv_in_project() then
-    ruff_cmd = { M.get_venv_dir() .. "/bin/python", "-m", "ruff", "server" }
+M._ruff_path = function(venv_dir)
+  if venv_dir == nil then
+    return nil
   else
-    ruff_cmd = { "ruff-lsp" }
+    return venv_dir .. "/bin/ruff"
   end
-  require("lspconfig").ruff.setup {
-    cmd = ruff_cmd,
-    on_attach = on_attach,
-  }
 end
 
-M.attach_lsp = function()
-  local venv_dir = M.get_venv_dir()
-
+M._print_tools_status = function(venv_dir)
   if M.tools_checked == false then
     local tools = "Python setup"
     if M.get_mypy_command() ~= nil then
@@ -108,17 +136,23 @@ M.attach_lsp = function()
     else
       tools = tools .. " ❌ type checking"
     end
+    if M._ruff_path(venv_dir) ~= nil then
+      tools = tools .. " ✅ linting (ruff)"
+    else
+      tools = tools .. " ❌ linting"
+    end
     if venv_dir ~= nil then
       tools = tools .. " ✅ venv discovered at " .. venv_dir
     else
       tools = tools .. " ❌ no venv discovered"
     end
-    vim.print(tools)
+
+    vim.notify(tools)
 
     M.tools_checked = true
   end
 
-  -- TODO also print whether linting and formatting are set up
+  -- TODO also print whether formatting is set up
 end
 
 return M

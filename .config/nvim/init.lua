@@ -25,7 +25,7 @@ local lsp = require('custom.lsp')
 lsp.setup()
 -- Scala (Metals) does some extra stuff to normal LSPs
 scala.init(lsp.on_attach)
-python.init(lsp.on_attach)
+python.init()
 helm.init()
 roc.init()
 
