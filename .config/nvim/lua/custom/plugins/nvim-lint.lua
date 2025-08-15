@@ -17,8 +17,6 @@ return {
     --- @param cmd string
     --- @return string | nil
     local function find_node_modules_binary(cmd)
-      local utils = require("custom.utils")
-
       local node_modules_parent = vim.fs.root(0, { "node_modules" })
       if node_modules_parent == nil then
         return nil
