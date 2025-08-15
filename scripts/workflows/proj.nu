@@ -1,3 +1,9 @@
+use ~/scripts/workflows/fv.nu
+
+# TODO export def --env main [] {
+# open a selector for all projects, then edit the selected one
+#}
+
 export def --env create [
   name: string
   --template (-t): string
@@ -53,5 +59,17 @@ export def --env create [
     nu template.nu $name
 
     rm template.nu
+  }
+}
+
+export def --env edit [
+  name: string
+  --file: string
+] {
+  cd $name
+  if ($file != null) {
+    nvim $file
+  } else {
+    fv
   }
 }

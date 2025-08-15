@@ -5,6 +5,8 @@
 
 use std/util "path add"
 
+export use ~/scripts/workflows/dotfiles.nu
+export use ~/scripts/workflows/fv.nu
 export use ~/scripts/workflows/proj.nu
 export use ~/scripts/workflows/version_control.nu wt
 
@@ -22,13 +24,3 @@ if ($nu.os-info.name == "macos") {
 }
 
 $env.config.show_banner = false
-
-def --wrapped dotfiles [...args: string] {
-  let git_dir = $env.HOME | path join ".dotfiles"
-  (
-    /usr/bin/git
-    $"--git-dir=($git_dir)"
-    $"--work-tree=($env.HOME)"
-    ...$args
-  )
-}
