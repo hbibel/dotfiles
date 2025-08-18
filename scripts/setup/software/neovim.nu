@@ -1,6 +1,6 @@
 use std/log
 
-export def update [os: string, arch: string] {
+export def update [] {
   let workdir = ($env.HOME | path join "tmp/nvim-install")
   rm -rf $workdir
   mkdir $workdir
@@ -11,7 +11,7 @@ export def update [os: string, arch: string] {
 
   download-archive ($version | get download_url) $archive_name ($version | get digest)
 
-  if $os == $OS_MACOS {
+  if (uname | get kernel-name) == "Darwin" {
     xattr -c $archive_name
   }
 
