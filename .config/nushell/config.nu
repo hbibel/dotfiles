@@ -13,6 +13,7 @@ export use ~/scripts/workflows/version_control.nu wt
 export use ~/scripts/utils/linux.nu
 
 export use ~/scripts/setup/software/neovim.nu
+export use ~/scripts/setup/software/fnm.nu [init-fnm]
 
 alias la = ls -la
 
@@ -25,3 +26,5 @@ if ($nu.os-info.name == "macos") {
 }
 
 $env.config.show_banner = false
+
+init-fnm
