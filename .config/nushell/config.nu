@@ -21,6 +21,7 @@ path add $"($env.HOME)/.cargo/bin"
 
 if ($nu.os-info.name == "macos") {
   path add "/opt/homebrew/bin"
+  path add "/usr/local/go/bin"
 }
 
 $env.config.show_banner = false
