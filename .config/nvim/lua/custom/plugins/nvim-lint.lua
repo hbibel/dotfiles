@@ -12,21 +12,25 @@ return {
       table.insert(python_linters, "mypy")
     end
 
-    -- Find a binary in the node_modules of any parent of the current buffer
-    --
+    --- Find a binary in the node_modules of any parent of the current buffer
+    ---
     --- @param cmd string
     --- @return string | nil
     local function find_node_modules_binary(cmd)
       local node_modules_parent = vim.fs.root(0, { "node_modules" })
-      if node_modules_parent == nil then
-        return nil
+      while node_modules_parent ~= nil do
+        local binary_path = node_modules_parent .. "/node_modules/.bin/" .. cmd
+        if vim.uv.fs_stat(binary_path) then
+          -- TODO difference between this and vim.fs.normalize?
+          return vim.fn.fnamemodify(binary_path, ":p")
+        end
+        node_modules_parent = vim.fs.root(
+          vim.fs.joinpath(node_modules_parent, ".."),
+          { "node_modules" }
+        )
       end
 
-      local binary_path = node_modules_parent .. "/node_modules/.bin/" .. cmd
-      if not vim.uv.fs_stat(binary_path) then
-        return nil
-      end
-      return vim.fn.fnamemodify(binary_path, ":p")
+      return nil
     end
 
     local xo_bin = find_node_modules_binary("xo")
