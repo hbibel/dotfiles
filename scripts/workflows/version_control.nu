@@ -42,7 +42,7 @@ def wt_dir [name?: string] {
   }
 
   # Note that we should be in 'main' now
-  let wt_dir_name = $name | str replace '/' '_'
+  let wt_dir_name = $name | str replace '/' '_' | str replace '#' '_'
   let wt_dir = $env.PWD | path join $"../($wt_dir_name)" | path expand
 
   if ($wt_dir | path exists) {
