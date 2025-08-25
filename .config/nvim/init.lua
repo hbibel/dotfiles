@@ -17,6 +17,7 @@ local python = require('custom.python')
 local keymaps = require('custom.keymaps')
 local helm = require("custom.helm")
 local roc = require("custom.roc")
+local bicep = require("custom.bicep")
 keymaps.basic()
 
 require('custom.commands').basic()
@@ -28,6 +29,7 @@ scala.init(lsp.on_attach)
 python.init()
 helm.init()
 roc.init()
+bicep.init()
 
 local group = vim.api.nvim_create_augroup('OverrideMelange', {})
 vim.api.nvim_create_autocmd('ColorScheme', {
