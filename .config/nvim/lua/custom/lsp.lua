@@ -25,7 +25,6 @@ M.servers = function()
     gopls = {
       filetypes = { "go", "gomod", },
     },
-    lua_ls = {},
     ts_ls = {
       filetypes = {
         "javascript",
