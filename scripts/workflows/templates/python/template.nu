@@ -7,6 +7,8 @@ def main [project_name: string] {
   open pyproject.toml | update project.name $project_name | save -f pyproject.toml
 
   # Get current stable version
+  # Note that we can't use https://www.python.org/ftp/python because this also
+  # lists versions that are not stable yet
   let docs_site = http get https://docs.python.org/3/
   let python_version = (
     $docs_site |
