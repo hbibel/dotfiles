@@ -7,28 +7,21 @@ M.init = function()
     return
   end
 
-  local root_dir
-  if vim.fs.root(0, ".venv") ~= nil then
-    root_dir = vim.fs.root(0, ".venv")
-  else
-    root_dir = vim.fn.getcwd()
-  end
-
   local venv_dir = M.get_venv_dir()
 
---   table.insert(require("dap").configurations.python,
---     {
---       name = "Pytest current file",
---       type = "python",
---       request = "launch",
---       module = "pytest",
---       args = { "${file}" },
---       justMyCode = "false",
---       -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
---     }
---   )
+  --   table.insert(require("dap").configurations.python,
+  --     {
+  --       name = "Pytest current file",
+  --       type = "python",
+  --       request = "launch",
+  --       module = "pytest",
+  --       args = { "${file}" },
+  --       justMyCode = "false",
+  --       -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+  --     }
+  --   )
 
-  M._register_lsps(root_dir)
+  M._register_lsps()
 
   M._print_tools_status(venv_dir)
 end
@@ -51,19 +44,15 @@ M.get_venv_dir = function()
   end
 end
 
-M._register_lsps = function(root_dir)
+M._register_lsps = function()
   local venv_dir = M.get_venv_dir()
-  local project_root = vim.fs.root(0, "pyproject.toml")
 
   vim.lsp.config("pylsp", {
-    -- TODO install server without Mason
-    cmd = {
-      "/Users/vw95b97/.local/share/nvim/mason/bin/pylsp",
-    },
+    cmd = { "pylsp" },
     filetypes = { "python" },
     -- pyproject toml files can be in subdirectories for projects with uv
     -- workspaces, so .venv is the better root marker
-    root_markers = { ".venv" ,"pyproject.toml" },
+    root_markers = { ".venv", "pyproject.toml" },
 
     init_options = {
       -- https://github.com/python-lsp/python-lsp-server/blob/eb61ccd97bbe9c58fbde6496a78015ee3c129146/CONFIGURATION.md

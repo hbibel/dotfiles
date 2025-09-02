@@ -36,7 +36,6 @@ M.servers = function()
         "html",
       }
     },
-    astro = {},
     marksman = {},
     yamlls = {},
     helm_ls = {
