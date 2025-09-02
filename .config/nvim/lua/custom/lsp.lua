@@ -82,19 +82,6 @@ M.setup = function()
 
     },
   })
-
-  -- more fancy features: https://github.com/mrcjkb/rustaceanvim
-  lspconfig.rust_analyzer.setup({
-    on_attach = M.on_attach,
-    settings = {
-      ["rust-analyzer"] = {
-        check = {
-          command = "clippy",
-          extraArgs = { "--all", "--", "-W", "clippy::pedantic" },
-        },
-      },
-    },
-  })
 end
 
 return M
