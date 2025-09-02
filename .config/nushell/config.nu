@@ -16,6 +16,7 @@ export use ~/scripts/setup/software/neovim.nu
 export use ~/scripts/setup/software/fnm.nu [init-fnm]
 
 alias la = ls -la
+alias fg = job unfreeze
 
 path add $"($env.HOME)/bin"
 path add $"($env.HOME)/.cargo/bin"
