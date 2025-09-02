@@ -105,9 +105,14 @@ export def install [spec_version?: string] {
 
     ^$python_executable -m pip install --upgrade pip
 
+    # link to python3.x
     let major_minor = $spec_version | split row '.' | $"($in.0).($in.1)"
     let link_target = ($env.HOME | path join $".local/bin/python($major_minor)")
     rm -f $link_target
+    ln -s ($install_dir | path join $"bin/python3") $link_target
+
+    # link to python3.x.y
+    let link_target = ($env.HOME | path join $".local/bin/python($spec_version)")
     ln -s ($install_dir | path join $"bin/python3") $link_target
   } else {
     error make {msg: $"Not implemented yet for Kernel (uname | get kernel-name)" } 
