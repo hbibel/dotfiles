@@ -18,15 +18,17 @@ export use ~/scripts/setup/software/fnm.nu [init-fnm]
 alias la = ls -la
 alias fg = job unfreeze
 
-# TODO this path should be an environment variable and used in other scripts
-# and neovim config, instead of hardcoded everywhere
-path add $"($env.HOME)/.local/bin"
 path add $"($env.HOME)/.cargo/bin"
 
 if ($nu.os-info.name == "macos") {
   path add "/opt/homebrew/bin"
   path add "/usr/local/go/bin"
 }
+
+# TODO this path should be an environment variable and used in other scripts
+# and neovim config, instead of hardcoded everywhere
+path add $"($env.HOME)/.local/bin"
+path add $"($env.HOME)/bin"
 
 $env.config.show_banner = false
 

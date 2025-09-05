@@ -1,124 +1,53 @@
-# Base: https://gist.github.com/danielmacuare/9b916540158040701aebaaf994bf88e7
-# Added sqlite3, libzm, libbz2-dev, liblzma-dev
-# Also add tk-dev if you need the tkinter API
-
-const version_regex = '(?P<major>\d)+\.(?P<minor>\d+)(\.(?P<patch>\d+))?'
-
 export def install [spec_version?: string] {
-  let work_dir = ($env.HOME | path join "tmp/python_install")
-  mkdir $work_dir
-  cd $work_dir
-
-  let spec_version = if $spec_version == null {
-    get_latest_version
-  } else {
-    get_latest_version $spec_version
-  }
-
-  print $"installing Python ($spec_version)"
-
-  (
-    curl
-    --fail
-    --location
-    --remote-name
-    $"https://www.python.org/ftp/python/($spec_version)/Python-($spec_version).tgz"
-  )
-  tar -xzf $"Python-($spec_version).tgz"
-  cd $"Python-($spec_version)"
-
-  let install_dir = ($env.HOME | path join $"software/python/($spec_version)")
-  mkdir $install_dir
+  let install_root = ($env.HOME | path join $"software/python")
+  mkdir $install_root
+  $env.PYENV_ROOT = $install_root
 
   if (uname | get kernel-name) == "Darwin" {
-    brew install pkg-config openssl@3.0 xz gdbm tcl-tk
-    let gdbm_prefix = brew --prefix gdbm
-    let openssl_prefix = brew --prefix openssl@3.0
-    with-env {
-      GDBM_CFLAGS: $"-I$($gdbm_prefix)/include"
-      GDBM_LIBS: $"-L$($gdbm_prefix)/lib -lgdbm"
-    } { 
-      (
-        ./configure
-        --prefix $install_dir
-        --enable-optimizations
-        --with-pydebug
-        --with-openssl=$"$($openssl_prefix)"
-      )
+    if (which pyenv | is-empty) {
+      brew install pyenv
     }
-    make -j (sysctl -n hw.physicalcpu)
-    make install
   } else if (uname | get kernel-name) == "Linux" {
     if (uname | get kernel-release | str contains "arch") {
-      (
-        sudo pacman -S --noconfirm --needed
-        openssl
-        zlib
-        bzip2
-        xz
-        sqlite
-        mpdecimal
-        libffi
-        tk
-        readline
-        ncurses
-      )
-    } else if not (which apt | is-empty) {
-      # Check kernel-release for Ubuntu and update condition
-      (
-        sudo apt install -y
-        build-essential
-        zlib1g-dev
-        libncurses5-dev
-        libgdbm-dev
-        libnss3-dev
-        libssl-dev
-        libreadline-dev
-        libffi-dev
-        libsqlite3-dev
-        libncursesw5-dev
-        libc6-dev
-        libbz2-dev
-        libgdbm-compat-dev
-        pkg-config
-      )
+      sudo pacman -S pyenv
     } else {
       error make {msg: $"Not implemented yet for distribution (uname | get kernel-release)" } 
     }
-
-    (
-      ./configure
-      --prefix $install_dir
-      --enable-optimizations
-      --without-tkinter # if you need the tkinter API, remove this line
-    )
-    # Don't get confused by the message
-    # "The necessary bits to build these optional modules were not found"
-    make -j (nproc)
-    make install
   } else {
     error make {msg: $"Not implemented yet for Kernel (uname | get kernel-name)" } 
   }
 
-  if ((uname | get kernel-name) == "Darwin") or ((uname | get kernel-name) == "Linux") {
-    let python_executable = $install_dir | path join "bin/python3"
+  print "Installing Python"
 
-    ^$python_executable -m pip install --upgrade pip
-
-    # link to python3.x
-    let major_minor = $spec_version | split row '.' | $"($in.0).($in.1)"
-    let link_target = ($env.HOME | path join $".local/bin/python($major_minor)")
-    rm -f $link_target
-    ln -s ($install_dir | path join $"bin/python3") $link_target
-
-    # link to python3.x.y
-    let link_target = ($env.HOME | path join $".local/bin/python($spec_version)")
-    ln -s ($install_dir | path join $"bin/python3") $link_target
-  } else {
-    error make {msg: $"Not implemented yet for Kernel (uname | get kernel-name)" } 
+  let pyenv_result = pyenv install --skip-existing ($spec_version | default "3:latest") | complete
+  if $pyenv_result.exit_code != 0 {
+    error make {msg: $"pyenv failed:\n($pyenv_result.stderr)"}
+  }
+  if ($pyenv_result.stderr | is-empty) {
+    # If the version has already been installed, pyenv will just silently exit
+    return
   }
 
-  rm -rf $work_dir
+  let $installed_version = (
+    $pyenv_result.stderr |
+    parse --regex 'Installed Python-(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)' |
+    get 0 |
+    {
+      major: ($in.major | into int) 
+      minor: ($in.minor | into int) 
+      patch: ($in.patch | into int) 
+    }
+  )
+
+  let majmin = $"($installed_version.major).($installed_version.minor)"
+  let majminptc = $"($installed_version.major).($installed_version.minor).($installed_version.patch)"
+
+  let binary_loc = ($install_root | path join $"versions/($majminptc)/bin/python($majmin)")
+
+  let link_target = ($env.HOME | path join $".local/bin/python($majmin)")
+  ln -s $binary_loc $link_target
+
+  ^$binary_loc -m pip install --upgrade pip
 }
 
 # # debugpy for debugging in Neovim:
@@ -127,6 +56,8 @@ export def install [spec_version?: string] {
 # debugpy/bin/python -m pip install debugpy
 
 export def get_latest_version [partial_version?: string] {
+  let version_regex = '(?P<major>\d)+\.(?P<minor>\d+)(\.(?P<patch>\d+))?'
+
   let version_filter = match $partial_version {
     null => { |v| true }
     _ => {

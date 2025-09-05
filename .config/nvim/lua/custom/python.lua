@@ -3,8 +3,11 @@ local M = {
 }
 
 M.init = function()
-  if vim.bo.filetype ~= "python" then
-    return
+  local root_dir
+  if vim.fs.root(0, ".venv") ~= nil then
+    root_dir = vim.fs.root(0, ".venv")
+  else
+    root_dir = vim.fn.getcwd()
   end
 
   local venv_dir = M.get_venv_dir()
@@ -47,31 +50,17 @@ end
 M._register_lsps = function()
   local venv_dir = M.get_venv_dir()
 
-  vim.lsp.config("pylsp", {
-    cmd = { "pylsp" },
+  vim.lsp.config("zuban", {
+    cmd = { "zuban", "server" },
+    cmd_env = {
+      VIRTUAL_ENV = venv_dir,
+    },
     filetypes = { "python" },
     -- pyproject toml files can be in subdirectories for projects with uv
     -- workspaces, so .venv is the better root marker
     root_markers = { ".venv", "pyproject.toml" },
-
-    init_options = {
-      -- https://github.com/python-lsp/python-lsp-server/blob/eb61ccd97bbe9c58fbde6496a78015ee3c129146/CONFIGURATION.md
-      pylsp = {
-        plugins = {
-          autopep8 = {
-            enabled = false,
-          },
-          pycodestyle = {
-            enabled = false,
-          },
-          jedi = {
-            environment = venv_dir,
-          },
-        },
-      },
-    }
   })
-  vim.lsp.enable("pylsp")
+  vim.lsp.enable("zuban")
 
   vim.lsp.config("ruff", {
     cmd = { M._ruff_path(venv_dir), "server" },
