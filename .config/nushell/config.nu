@@ -18,6 +18,11 @@ export use ~/scripts/setup/software/fnm.nu [init-fnm]
 alias la = ls -la
 alias fg = job unfreeze
 
+export def code-review [] {
+  git reset --soft main
+  nvim -c G .
+}
+
 path add $"($env.HOME)/.cargo/bin"
 
 if ($nu.os-info.name == "macos") {
