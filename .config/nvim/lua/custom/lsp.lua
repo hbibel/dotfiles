@@ -45,7 +45,6 @@ M.servers = function()
         }
       }
     },
-    ruff = {},
   }
 end
 
