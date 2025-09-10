@@ -19,7 +19,7 @@ alias la = ls -la
 alias fg = job unfreeze
 
 export def code-review [] {
-  git reset --soft main
+  git reset --mixed (git merge-base main HEAD)
   nvim -c G .
 }
 
