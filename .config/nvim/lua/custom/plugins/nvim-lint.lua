@@ -51,7 +51,8 @@ return {
 
     nvim_lint.linters_by_ft = {
       python = python_linters,
-      typescript = { "eslint", }
+      typescript = { "eslint", },
+      markdown = { "markdownlint-cli2", }
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
