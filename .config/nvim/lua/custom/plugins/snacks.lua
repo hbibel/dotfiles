@@ -1,7 +1,13 @@
 local M = {}
 
 M.opts = {
-  picker = {},
+  picker = {
+    formatters = {
+      file = {
+        truncate = 999,
+      }
+    }
+  },
 }
 
 local smartOpts = { sources = { files = { hidden = true } } }
