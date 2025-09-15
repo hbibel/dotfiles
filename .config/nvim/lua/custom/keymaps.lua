@@ -143,11 +143,4 @@ function M.lsp(bufnr)
   nmap('<C-l>', vim.lsp.codelens.run, '[E]xecute [L]ens action')
 end
 
-function M.scala(bufnr)
-  -- require('telescope.builtin').lsp_references doesn't work in Metals
-  -- unfortunately
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references,
-    { buffer = bufnr, desc = '[G]oto [R]eferences' })
-end
-
 return M
