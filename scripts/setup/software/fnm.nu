@@ -18,3 +18,10 @@ export def --env init-fnm [] {
     )
   }
 }
+
+# requires unzip and curl
+export def install [] {
+  let install_dir = $env.HOME | path join "software/fnm"
+  curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir $install_dir
+  ln -s ($install_dir | path join "fnm") ($env.HOME | path join ".local/bin")
+}
