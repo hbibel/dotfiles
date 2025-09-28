@@ -46,7 +46,7 @@ export def --env create [
         $templates_dir |
         path expand |
         ls $in |
-        get $name |
+        get name |
         path split |
         each { last }
       )
@@ -55,7 +55,7 @@ export def --env create [
 
     print $"Copying from ($template_dir) to ($project_dir)"
 
-    ls $template_dir | get name | each {|f| cp -r $f $project_dir}
+    ls -a $template_dir | get name | each {|f| cp -r $f $project_dir}
     nu template.nu $name
 
     rm template.nu
