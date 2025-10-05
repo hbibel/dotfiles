@@ -18,4 +18,7 @@ def main [project_name: string] {
     get version.0
   )
   open pyproject.toml | update project.requires-python $"==($python_version)" | save -f pyproject.toml
+
+  cat pyproject.toml tool-settings.toml | save --force pyproject.toml
+  rm tool-settings.toml
 }
