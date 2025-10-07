@@ -1,5 +1,3 @@
-use std/log
-
 use ~/scripts/utils/linux.nu [
   service_status,
   SERVICE_STATUS_RUNNING,
@@ -7,34 +5,43 @@ use ~/scripts/utils/linux.nu [
   SERVICE_STATUS_INACTIVE
 ]
 
-export def setup [] {
-  setup_service avahi avahi-daemon
-  setup_service cups cups
+export def setup [--verbose] {
+  setup_service avahi avahi-daemon --verbose=$verbose
+  setup_service cups cups --verbose=$verbose
 
   if not (which gs | is-empty) {
-    log info "already installed: ghostscript"
+    if $verbose {
+      print "already installed: ghostscript"
+    }
   } else {
     sudo pacman -S --noconfirm ghostscript
   }
 
   if ("/usr/bin/saned" | path exists) {
-    log info "already installed: sane"
+    if $verbose {
+      print "already installed: sane"
+    }
   } else {
+    print "Installing sane ..."
     sudo pacman -S --noconfirm sane
   }
 
   if not (which simple-scan | is-empty) {
-    log info "already installed: simple-scan"
+    if $verbose {
+      print "already installed: simple-scan"
+    }
   } else {
+    print "Installing simple-scan ..."
     sudo pacman -S --noconfirm simple-scan
   }
-
 }
 
-def setup_service [package_name: string, service_name: string] {
+def setup_service [package_name: string, service_name: string, --verbose] {
   let service_status = service_status $service_name
   if $service_status == $SERVICE_STATUS_RUNNING {
-    log info $"($service_name) already set up"
+    if $verbose {
+      print $"($service_name) already set up"
+    }
     return
   }
 
@@ -48,7 +55,7 @@ def setup_service [package_name: string, service_name: string] {
     sudo systemctl start $service_name
     add_printers
   } else {
-    log error $"unhandled ($service_name) status: ($service_status)"
+    print $"unhandled ($service_name) status: ($service_status)"
   }
 }
 
@@ -59,7 +66,7 @@ export def add_printers [] {
   let printers = ($devices | where uri !~ "^(beh|ipp|ipps|http|lpd|https|socket|smb)$")
   
   if ($printers | length) == 0 {
-    log info "No network printers found."
+    print "No network printers found."
     return
   }
   
@@ -74,7 +81,7 @@ export def add_printers [] {
   let indices = ($selection | split row "," | each {|x| ($x | str trim | into int) - 1})
 
   if ($indices | length) == 0 {
-    log info "No printers to be added."
+    print "No printers to be added."
     return
   }
     
@@ -98,16 +105,16 @@ export def add_printers [] {
         str replace --all "#" "_"
       )
       
-      log info $"Adding printer: ($printer_name) with URI: ($uri)"
+      print $"Adding printer: ($printer_name) with URI: ($uri)"
       
       try {
         lpadmin -p $printer_name -E -v $uri -m everywhere
-        log info $"Successfully added ($printer_name)"
+        print $"Successfully added ($printer_name)"
       } catch {
-        log error $"Failed to add ($printer_name)"
+        print $"Failed to add ($printer_name)"
       }
     } else {
-      log error $"Invalid selection: ($index + 1)"
+      print $"Invalid selection: ($index + 1)"
     }
   }
 }

@@ -1,17 +1,21 @@
-use std/log
-
-export def install [] {
+export def install [--verbose] {
   if  (pacman -Q cosmic-session | complete | get exit_code) == 0 {
-    log info "already installed: Cosmic"
+    if $verbose {
+      print "already installed: Cosmic"
+    }
   } else {
+    print "Installing COSMIC desktop ..."
     sudo pacman -S --noconfirm cosmic
   }
 
   if (systemctl is-enabled cosmic-greeter | complete | get stdout | str trim) == "not-found" {
-    log warning "Cosmic greeter service not found!"
+    print "WARNING: Cosmic greeter service not found!"
   } else if (systemctl is-enabled cosmic-greeters | complete | get stdout | str trim) == "enabled" {
-    log info "Cosmic greeter service is already enabled"
+    if $verbose {
+      print "Cosmic greeter service is already enabled"
+    }
   } else {
+    print "Cosmic greeter service is inactive, enabling ..."
     sudo systemctl enable cosmic-greeter
   }
 }

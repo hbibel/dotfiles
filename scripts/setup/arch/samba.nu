@@ -1,9 +1,10 @@
-use std/log
-
-export def install [] {
+export def install [--verbose] {
   if (pacman -Q samba | complete | get exit_code) == 0 {
-    log info "already installed: samba"
+    if $verbose {
+      print "already installed: samba"
+    }
     return
   }
+  print "Installing samba ..."
   sudo pacman -S --noconfirm samba
 }

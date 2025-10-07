@@ -1,5 +1,3 @@
-use std/log
-
 use ~/scripts/utils/linux.nu [
   service_status,
   SERVICE_STATUS_RUNNING,
@@ -7,21 +5,25 @@ use ~/scripts/utils/linux.nu [
   SERVICE_STATUS_INACTIVE
 ]
 
-export def setup [] {
+export def setup [--verbose] {
   let bluetooth_status = service_status bluetooth
   if $bluetooth_status == $SERVICE_STATUS_RUNNING {
-    log info "bluetooth already set up"
+    if $verbose {
+      print "bluetooth already set up"
+    }
     return
   }
 
   if $bluetooth_status == $SERVICE_STATUS_NOT_FOUND {
+    print "Setting up Bluetooth ..."
     sudo pacman -S --noconfirm bluez bluez-utils
     sudo systemctl enable bluetooth
     sudo systemctl start bluetooth
   } else if $bluetooth_status == $SERVICE_STATUS_INACTIVE {
+    print "BLuetooth inactive, enabling ..."
     sudo systemctl enable bluetooth
     sudo systemctl start bluetooth
   } else {
-    log error $"unhandled bluetooth status: ($bluetooth_status)"
+    print $"unhandled bluetooth status: ($bluetooth_status)"
   }
 }

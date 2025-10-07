@@ -1,5 +1,3 @@
-use std/log
-
 export def install [] {
   if not (which dropboxd | is-empty) {
     log info "already installed: dropbox"
@@ -13,6 +11,4 @@ export def install [] {
 
   wget -O ~/.local/bin/dropbox.py https://www.dropbox.com/download?dl=packages/dropbox.py
   chmod +x ~/.local/bin/dropbox.py
-
-  ~/.local/bin/dropbox.py start
 }

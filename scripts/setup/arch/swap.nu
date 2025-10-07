@@ -1,8 +1,8 @@
-use std/log
-
-export def setup_btrfs_swap [] {
+export def setup-btrfs-swap [--verbose] {
   if (swapon --show | lines | length) > 1 {
-    log info "Swap is already configured"
+    if $verbose {
+      print "Swap is already configured"
+    }
     return
   }
 
