@@ -11,6 +11,10 @@ M.opts = {
 }
 
 local smartOpts = { sources = { files = { hidden = true } } }
+local grepOpts = {
+  hidden = true,
+  ignored = false,
+}
 
 M.keys = {
   -- Top Pickers & Explorer
@@ -37,7 +41,7 @@ M.keys = {
   -- Grep
   { "<leader>sb",      function() Snacks.picker.lines() end,                 desc = "Buffer Lines" },
   { "<leader>sB",      function() Snacks.picker.grep_buffers() end,          desc = "Grep Open Buffers" },
-  { "<leader>sg",      function() Snacks.picker.grep() end,                  desc = "Grep" },
+  { "<leader>sg",      function() Snacks.picker.grep(grepOpts) end,          desc = "Grep" },
   { "<leader>sw",      function() Snacks.picker.grep_word() end,             desc = "Visual selection or word", mode = { "n", "x" } },
   -- search
   { '<leader>s"',      function() Snacks.picker.registers() end,             desc = "Registers" },
