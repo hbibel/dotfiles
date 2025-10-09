@@ -19,6 +19,4 @@ export def setup [--verbose] {
   audio setup --verbose=$verbose
   bluetooth setup --verbose=$verbose
   ntp setup --verbose=$verbose
-  # NOTE: This script contains interactive prompts
-  printer setup --verbose=$verbose
 }
