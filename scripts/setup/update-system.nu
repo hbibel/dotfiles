@@ -27,7 +27,7 @@ def main [] {
   # TODO
   # "joplin"
   (
-    funstall update --install-missing ([
+    funstall update --install-missing --packages=([
       "delta"
       "discord"
       "edge"
