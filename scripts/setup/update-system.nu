@@ -1,7 +1,9 @@
 use ~/scripts/setup/arch.nu
 
 def main [] {
+  mkdir (env.$HOME | path join ".local/bin")
   if (which funstall | is-empty) {
+    rm -f /tmp/install-funstall.nu
     (
       ^curl
         --silent
@@ -22,5 +24,21 @@ def main [] {
     arch setup
   }
 
-  # TODO funstall install --?? delta discord edge fonts fzf joplin keepass wezterm wget zsh neovim ripgrep nix
+  # TODO
+  # "edge",
+  # "joplin",
+  # "nix",
+  funstall update --install-missing (
+    "delta",
+    "discord",
+    "nerd-fonts",
+    "fzf",
+    "keepass",
+    "neovim",
+    "ripgrep",
+    "wezterm",
+    "wget",
+    "wl-clipboard",
+    "zsh",
+  )
 }
