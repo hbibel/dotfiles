@@ -25,20 +25,20 @@ def main [] {
   }
 
   # TODO
-  # "edge",
   # "joplin",
-  # "nix",
   funstall update --install-missing (
-    "delta",
-    "discord",
-    "nerd-fonts",
-    "fzf",
-    "keepass",
-    "neovim",
-    "ripgrep",
-    "wezterm",
-    "wget",
-    "wl-clipboard",
-    "zsh",
+    "delta"
+    "discord"
+    "edge",
+    "nerd-fonts"
+    "fzf"
+    "keepass"
+    "neovim"
+    "nix",
+    "ripgrep"
+    "wezterm"
+    "wget"
+    "wl-clipboard"
+    "zsh"
   )
 }
