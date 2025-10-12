@@ -1,7 +1,7 @@
 use ~/scripts/setup/arch.nu
 
 def main [] {
-  mkdir (env.$HOME | path join ".local/bin")
+  mkdir ($env.HOME | path join ".local/bin")
   if (which funstall | is-empty) {
     rm -f /tmp/install-funstall.nu
     (
@@ -25,20 +25,20 @@ def main [] {
   }
 
   # TODO
-  # "joplin",
-  funstall update --install-missing (
+  # "joplin"
+  funstall update --install-missing [
     "delta"
     "discord"
-    "edge",
+    "edge"
     "nerd-fonts"
     "fzf"
     "keepass"
     "neovim"
-    "nix",
+    "nix"
     "ripgrep"
     "wezterm"
     "wget"
     "wl-clipboard"
     "zsh"
-  )
+  ]
 }
