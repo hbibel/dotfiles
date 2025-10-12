@@ -5,6 +5,7 @@ use arch/cosmic.nu
 use arch/nfs.nu
 use arch/ntp.nu
 use arch/printer.nu
+use arch/samba.nu
 use arch/swap.nu
 
 export def setup [--verbose] {

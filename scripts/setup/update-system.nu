@@ -26,19 +26,21 @@ def main [] {
 
   # TODO
   # "joplin"
-  funstall update --install-missing [
-    "delta"
-    "discord"
-    "edge"
-    "nerd-fonts"
-    "fzf"
-    "keepass"
-    "neovim"
-    "nix"
-    "ripgrep"
-    "wezterm"
-    "wget"
-    "wl-clipboard"
-    "zsh"
-  ]
+  (
+    funstall update --install-missing ([
+      "delta"
+      "discord"
+      "edge"
+      "nerd-fonts"
+      "fzf"
+      "keepass"
+      "neovim"
+      "nix"
+      "ripgrep"
+      "wezterm"
+      "wget"
+      "wl-clipboard"
+      "zsh"
+    ] | str join ',')
+  )
 }

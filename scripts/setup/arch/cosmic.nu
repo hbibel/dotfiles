@@ -10,7 +10,7 @@ export def install [--verbose] {
 
   if (systemctl is-enabled cosmic-greeter | complete | get stdout | str trim) == "not-found" {
     print "WARNING: Cosmic greeter service not found!"
-  } else if (systemctl is-enabled cosmic-greeters | complete | get stdout | str trim) == "enabled" {
+  } else if (systemctl is-enabled cosmic-greeter | complete | get stdout | str trim) == "enabled" {
     if $verbose {
       print "Cosmic greeter service is already enabled"
     }
