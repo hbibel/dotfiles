@@ -25,17 +25,6 @@ M.servers = function()
     gopls = {
       filetypes = { "go", "gomod", },
     },
-    ts_ls = {
-      filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
-        "html",
-      }
-    },
     marksman = {},
     yamlls = {},
     helm_ls = {

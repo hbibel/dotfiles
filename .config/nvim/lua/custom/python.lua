@@ -3,13 +3,6 @@ local M = {
 }
 
 M.init = function()
-  local root_dir
-  if vim.fs.root(0, ".venv") ~= nil then
-    root_dir = vim.fs.root(0, ".venv")
-  else
-    root_dir = vim.fn.getcwd()
-  end
-
   local venv_dir = M.get_venv_dir()
 
   --   table.insert(require("dap").configurations.python,
