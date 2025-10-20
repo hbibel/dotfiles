@@ -20,6 +20,7 @@ local roc = require("custom.roc")
 local bicep = require("custom.bicep")
 local lua = require("custom.lua")
 local rust = require("custom.rust")
+local javascript = require("custom.javascript")
 keymaps.basic()
 
 require('custom.commands').basic()
@@ -34,6 +35,7 @@ roc.init()
 bicep.init()
 lua.init()
 rust.init()
+javascript.init()
 
 local group = vim.api.nvim_create_augroup('OverrideMelange', {})
 vim.api.nvim_create_autocmd('ColorScheme', {
