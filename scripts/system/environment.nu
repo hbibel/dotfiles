@@ -1,6 +1,8 @@
 export def --env init [] {
   source ~/secrets.nu
 
+  $env.EDITOR = "nvim"
+
   $env.BIN_PATH = $"($env.HOME)/.local/bin"
 
   path add $"($env.HOME)/.cargo/bin"
