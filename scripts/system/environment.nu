@@ -19,5 +19,5 @@ export def --env init [] {
 
 export def in-home-network [] {
   let nodename = uname | get nodename
-  $nodename == "obsidian"
+  $nodename in ["obsidian", "atlas"]
 }
