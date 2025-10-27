@@ -25,7 +25,7 @@ def check-fstab [subdir: string] {
   ]
 
   let fstab_line_parts = [
-    $"https://($base_url)/($subdir)"
+    $"($base_url)/($subdir)"
     $"/mnt/illmatic/($subdir)"
     "davfs"
     ($options | str join ",")
