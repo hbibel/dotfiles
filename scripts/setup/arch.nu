@@ -2,6 +2,7 @@ use arch/audio.nu
 use arch/bluetooth.nu
 
 use arch/cosmic.nu
+use arch/nas.nu
 use arch/nfs.nu
 use arch/ntp.nu
 use arch/printer.nu
@@ -20,4 +21,5 @@ export def setup [--verbose] {
   audio setup --verbose=$verbose
   bluetooth setup --verbose=$verbose
   ntp setup --verbose=$verbose
+  nas setup --verbose=$verbose
 }
