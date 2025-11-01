@@ -8,7 +8,6 @@ use ~/scripts/utils/linux.nu [
 export def setup [--verbose] {
   setup-pipewire --verbose=$verbose
   install-sof-firmware --verbose=$verbose
-
 }
 
 def setup-pipewire [--verbose] {
@@ -30,7 +29,7 @@ def setup-pipewire [--verbose] {
     systemctl --user enable pipewire-pulse.service
     systemctl --user start pipewire-pulse.service
   } else {
-    log error $"unhandled pipewire-pulse status: ($service_status)"
+    error make { msg: $"unhandled pipewire-pulse status: ($service_status)" }
   }
 
   # run `pactl info` to check manually

@@ -22,4 +22,5 @@ export def setup [--verbose] {
   bluetooth setup --verbose=$verbose
   ntp setup --verbose=$verbose
   nas setup --verbose=$verbose
+  printer setup --verbose=$verbose
 }
