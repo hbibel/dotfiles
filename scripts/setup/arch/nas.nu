@@ -7,9 +7,9 @@ export def setup [--verbose] {
     sudo pacman -S --noconfirm davfs2
   }
 
-  sudo mkdir /mnt/illmatic/family
+  sudo mkdir -p /mnt/illmatic/family
   check-fstab "family"
-  sudo mkdir /mnt/illmatic/hannes
+  sudo mkdir -p /mnt/illmatic/hannes
   check-fstab "hannes"
 }
 
