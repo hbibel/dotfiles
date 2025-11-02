@@ -8,6 +8,7 @@ local setup = function()
       "rust",
       "tsx",
       "typescript",
+      "javascript",
       "vimdoc",
       "vim",
       "scala",

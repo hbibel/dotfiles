@@ -14,14 +14,6 @@ local function basic()
   vim.cmd("command! -nargs=0 Usnap exe 'undo ' . snapshot")
 end
 
-local function lsp(bufnr)
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    require('conform').format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-
 return {
   basic = basic,
-  lsp = lsp,
 }

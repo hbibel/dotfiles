@@ -1,4 +1,3 @@
-local scala = require("custom.scala")
 local keymaps = require("custom.keymaps")
 
 local snacks = require("custom.plugins.snacks")
@@ -16,7 +15,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('custom.plugins.dap')
+-- require('custom.plugins.dap')
 
 return require('lazy').setup({
   'tpope/vim-fugitive',
@@ -78,7 +77,7 @@ return require('lazy').setup({
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff" },
-        lualine_c = { "filename", scala.metals_status },
+        lualine_c = { "filename" },
         lualine_x = { "diagnostics", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" }
@@ -154,8 +153,6 @@ return require('lazy').setup({
     opts = {},
     config = require("custom.plugins.nvim-lint").setup,
   },
-
-  scala.plugins,
 
   -- looks nicer than vim.opt.colorcolumn = "80"
   {
