@@ -41,8 +41,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 vim.opt.termguicolors = true
 vim.cmd.colorscheme "melange"
 
--- import init_workspace.lua, if it exists
-pcall(require, "init_workspace")
+local local_init = vim.fn.getcwd() .. "/init_workspace.lua"
+if vim.fn.filereadable(local_init) == 1 then
+  dofile(local_init)
+end
 
 vim.opt_local.indentkeys:remove(":")
 
