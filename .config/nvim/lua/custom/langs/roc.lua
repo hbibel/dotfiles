@@ -16,7 +16,12 @@ M.init = function()
     },
   }
 
-  require("lspconfig").roc_ls.setup({})
+  vim.lsp.config("roc", {
+    cmd = { "roc_language_server" },
+    filetypes = { "roc" },
+    root_markers = { ".git" },
+  })
+  vim.lsp.enable("roc")
 end
 
 return M
