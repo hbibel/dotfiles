@@ -52,3 +52,15 @@ def service_status_tuple [service_name: string, user_space: bool] {
     sub_state: ($status | get SubState),
   }
 }
+
+export def ensure-installed [package: string, --verbose] {
+  if not (which pacman | is-empty) {
+    if (pacman -Q $package | complete | get exit_code) == 0 {
+      if $verbose {
+        print $"Already installed: ($package)"
+      }
+    } else {
+      sudo pacman -S $package
+    }
+  }
+}

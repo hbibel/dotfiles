@@ -24,17 +24,16 @@ def main [] {
     arch setup
   }
 
-  # TODO
-  # "joplin"
   (
     funstall update --install-missing --packages=([
       "delta"
       "discord"
       "edge"
-      "nerd-fonts"
       "fzf"
+      "joplin"
       "keepass"
       "neovim"
+      "nerd-fonts"
       "nix"
       "ripgrep"
       "wezterm"

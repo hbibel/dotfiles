@@ -7,6 +7,7 @@ use arch/nfs.nu
 use arch/ntp.nu
 use arch/printer.nu
 use arch/samba.nu
+use arch/snapshots.nu
 use arch/swap.nu
 
 export def setup [--verbose] {
@@ -23,4 +24,5 @@ export def setup [--verbose] {
   ntp setup --verbose=$verbose
   nas setup --verbose=$verbose
   printer setup --verbose=$verbose
+  snapshots setup --verbose=$verbose
 }
