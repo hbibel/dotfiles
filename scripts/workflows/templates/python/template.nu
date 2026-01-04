@@ -1,11 +1,6 @@
 def main [project_name: string] {
   git add flake.nix
 
-  nix develop --command bash -c "uv init"
-  nix develop --command bash -c "uv add isort mypy ruff pytest"
-
-  open pyproject.toml | update project.name $project_name | save -f pyproject.toml
-
   # Get current stable version
   # Note that we can't use https://www.python.org/ftp/python because this also
   # lists versions that are not stable yet
@@ -17,8 +12,17 @@ def main [project_name: string] {
     parse --regex '(?P<version>\d+\.\d+\.\d+)' |
     get version.0
   )
-  open pyproject.toml | update project.requires-python $"==($python_version)" | save -f pyproject.toml
 
-  cat pyproject.toml tool-settings.toml | save --force pyproject.toml
+  nix develop --command bash -c $"uv init --python ($python_version)"
+  nix develop --command bash -c "uv add isort mypy ruff pytest"
+
+  open pyproject.toml | update project.name $project_name | save pyproject.tmp.toml
+  mv pyproject.tmp.toml pyproject.toml
+
+  open pyproject.toml | update project.requires-python $"==($python_version)" | save pyproject.tmp.toml
+  mv pyproject.tmp.toml pyproject.toml
+
+  cat pyproject.toml tool-settings.toml | save pyproject.tmp.toml
+  mv pyproject.tmp.toml pyproject.toml
   rm tool-settings.toml
 }
