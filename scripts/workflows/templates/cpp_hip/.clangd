@@ -1,0 +1,5 @@
+CompileFlags:
+  Add: 
+    - "-x"
+    - "hip"
+    - "-D__HIP_PLATFORM_AMD__"
