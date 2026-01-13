@@ -19,6 +19,8 @@ local setup = function()
       "roc",
       "nu",
       "nix",
+      "cpp",
+      "cuda",
     },
 
     auto_install = false,
