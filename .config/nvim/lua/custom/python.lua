@@ -45,8 +45,8 @@ end
 M._register_lsps = function()
   local venv_dir = M.get_venv_dir()
 
-  vim.lsp.config("zuban", {
-    cmd = { "zuban", "server" },
+  vim.lsp.config("ty", {
+    cmd = { "ty", "server" },
     cmd_env = {
       VIRTUAL_ENV = venv_dir,
     },
@@ -55,7 +55,7 @@ M._register_lsps = function()
     -- workspaces, so .venv is the better root marker
     root_markers = { ".venv", "pyproject.toml" },
   })
-  vim.lsp.enable("zuban")
+  vim.lsp.enable("ty")
 
   vim.lsp.config("ruff", {
     cmd = { M._ruff_path(venv_dir), "server" },
