@@ -31,6 +31,7 @@ javascript.init()
 require("custom.langs.nix").init()
 require("custom.langs.roc").init()
 require("custom.langs.cpp").init()
+require("custom.langs.hcl").init()
 
 local group = vim.api.nvim_create_augroup("OverrideMelange", {})
 vim.api.nvim_create_autocmd("ColorScheme", {
