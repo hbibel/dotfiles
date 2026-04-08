@@ -15,7 +15,7 @@ M.basic = function()
   vim.keymap.set({ 'n', 'v' }, '<C-e>', '4<C-e>')
   vim.keymap.set({ 'n', 'v' }, '<C-y>', '4<C-y>')
 
-  vim.keymap.set("n", "<leader>cp", ':let @+ = expand("%")<cr>', { desc = "Copy filename to clipboard " })
+  vim.keymap.set("n", "<leader>cp", ':let @+ = expand("%:.")<cr>', { desc = "Copy filename to clipboard " })
 
   -- Basic text editing
   vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
